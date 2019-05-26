@@ -67,10 +67,13 @@ for filename in test_files:
         depth = pred_depth_pyramid[0]
         print(depth.size())
         depth_mean = (fliplr(depth[0:1, :, :]) + depth[1:2, :, :])*.5
+        depth_mean.save(output_path + '/%4d.png'%(i))
         pred_depths.append(depth_mean.data.cpu().squeeze().numpy())
+
         # compute mean
     else:
         pred_depth_pyramid = vgg_depth_net.forward((img_var.unsqueeze(0)-127)/127)
+        pred_depth_pyramid[0].save(output_path + '/%4d.png' % (i))
         pred_depths.append(pred_depth_pyramid[0].data.cpu().squeeze().numpy())
     i = i+1
     # if i==3:
